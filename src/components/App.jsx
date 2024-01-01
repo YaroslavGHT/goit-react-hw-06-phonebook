@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
+// import { useMemo } from 'react';
 import { nanoid } from 'nanoid'
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx'
