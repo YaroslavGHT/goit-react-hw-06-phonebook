@@ -1,54 +1,42 @@
-import { Component } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { nanoid } from 'nanoid'
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx'
 import { ContactList } from './ContactList/ContactList.jsx'
 
-export class App extends Component {
-  state = {
-    contacts: [
+export const App = () => {
+  const [filter, setFilter] = useState('');
+  const [contacts, setContacts] = useState(JSON.parse(localStorage.getItem('contacts')) ?? [
       {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
       {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
       {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
       {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-    ],
-    filter: ''
-  }
+    ]);
+  const [filteredProfiles, setfilteredProfiles] = useState(contacts);
 
-  // componentDidMount() {
-  //   const saveLocalContacts = localStorage.getItem('contacts');
-  //   const saveContacts = JSON.parse(saveLocalContacts) ?? [];
-  //   const cont = saveContacts.length > 0 ? saveContacts : this.state.contacts;
-  //   this.setState({ contacts: cont });
-  // }
+  useEffect(() => {
+    const saveLocalContacts = JSON.stringify(contacts);
+    localStorage.setItem('contacts', saveLocalContacts); 
+  }, [contacts]);
 
-   componentDidMount() {
-    const saveLocalContacts = localStorage.getItem('contacts');
-    const saveContacts = JSON.parse(saveLocalContacts);
-    if (saveContacts) {
-      this.setState({ contacts: saveContacts });
-    }
-   } 
+  useEffect(() => {
+    const filteredProf = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.trim().toLowerCase())
+    );
+    setfilteredProfiles(filteredProf);
+  }, [contacts, filter]);
 
-  componentDidUpdate(prevProps, prevState) {
-    if(prevState.contacts !== this.state.contacts) {
-      const saveLocalContacts = JSON.stringify(this.state.contacts);
-      localStorage.setItem('contacts', saveLocalContacts);
-    }
-  }
-
-  handleChangeFilter = event => {
+  const handleChangeFilter = event => {
     const newFilter = event.target.value;
-    this.setState({ filter: newFilter });
+    return setFilter(newFilter);
   }
 
-  handleDeleteContact = contactId => {
-    this.setState({
-      contacts: this.state.contacts.filter(contact => contact.id !== contactId),
-    });
+  const handleDeleteContact = contactId => {
+    const contactAfterDel = contacts.filter(contact => contact.id !== contactId);
+    return setContacts(contactAfterDel);
   };
 
-  handleFormSubmit = event => {
+  const handleFormSubmit = event => {
     event.preventDefault();
     const name = event.currentTarget.elements.name.value;
     const number = event.currentTarget.elements.number.value;
@@ -58,46 +46,43 @@ export class App extends Component {
       number,
       id
     }
-    this.handleAddProfile(newContact);
+    handleAddProfile(newContact);
     event.currentTarget.reset();
   };
 
-  handleAddProfile = newContact => {
-    const checkDuplication = this.state.contacts.some(
+  const handleAddProfile = (newContact) => {
+    const checkDuplication = contacts.some(
       contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
     if (checkDuplication) {
       alert(`${newContact.name} is alredy in contscts`);
       return;
     }
-    this.setState(prevState => {
-      return {
-        contacts: [...prevState.contacts, newContact],
-      };
-    });
+    return setContacts([...contacts, newContact]);
   };
-
-  render() { 
-    const filteredProfiles = this.state.contacts.filter(contact =>
-          contact.name.toLowerCase().includes(this.state.filter.trim().toLowerCase())
-    );
-
-    return (
-      <div>
-        <h2>Phonebook</h2>
-        <ContactForm
-          handleFormSubmit={this.handleFormSubmit}
-        />
-        <h2>Contacts</h2>
-        <Filter
-          handleChangeFilter={this.handleChangeFilter}
-          value={this.state.filter}
-        />
-        <ContactList
-          filteredProfiles={filteredProfiles}
-          handleDeleteContact={this.handleDeleteContact}
-        />
-      </div>
-    );
-  }
-}
+  
+  // const filteredProfiles = useMemo(() => {
+  //   return contacts.filter(contact =>
+  //     contact.name.toLowerCase().includes(filter.trim().toLowerCase())
+  //   );
+  // }, [contacts, filter]);
+  
+  return (
+    <div>
+      <h2>Phonebook</h2>
+      <ContactForm
+        handleFormSubmit={handleFormSubmit}
+      />
+      <h2>Contacts</h2>
+      <Filter
+        handleChangeFilter={handleChangeFilter}
+        value={filter}
+      />
+      <ContactList
+        filteredProfiles={filteredProfiles}
+        handleDeleteContact={handleDeleteContact}
+      />
+    </div>
+  );
+  
+};
