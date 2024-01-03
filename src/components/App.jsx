@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 // import { useMemo } from 'react';
 import { nanoid } from 'nanoid'
 import { ContactForm } from './ContactForm/ContactForm.jsx';
@@ -12,20 +12,12 @@ export const App = () => {
       {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
       {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
       {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
-    ]);
-  const [filteredProfiles, setfilteredProfiles] = useState(contacts);
+  ]);
 
   useEffect(() => {
     const saveLocalContacts = JSON.stringify(contacts);
     localStorage.setItem('contacts', saveLocalContacts); 
   }, [contacts]);
-
-  useEffect(() => {
-    const filteredProf = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.trim().toLowerCase())
-    );
-    setfilteredProfiles(filteredProf);
-  }, [contacts, filter]);
 
   const handleChangeFilter = event => {
     const newFilter = event.target.value;
@@ -42,11 +34,7 @@ export const App = () => {
     const name = event.currentTarget.elements.name.value;
     const number = event.currentTarget.elements.number.value;
     const id = nanoid();
-    const newContact = {
-      name,
-      number,
-      id
-    }
+    const newContact = { name, number, id };
     handleAddProfile(newContact);
     event.currentTarget.reset();
   };
@@ -62,11 +50,11 @@ export const App = () => {
     return setContacts([...contacts, newContact]);
   };
   
-  // const filteredProfiles = useMemo(() => {
-  //   return contacts.filter(contact =>
-  //     contact.name.toLowerCase().includes(filter.trim().toLowerCase())
-  //   );
-  // }, [contacts, filter]);
+  const filteredProfiles = useMemo(() => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.trim().toLowerCase())
+    );
+  }, [contacts, filter]);
   
   return (
     <div>
@@ -85,5 +73,4 @@ export const App = () => {
       />
     </div>
   );
-  
 };
