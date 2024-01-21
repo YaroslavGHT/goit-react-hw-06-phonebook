@@ -1,0 +1,21 @@
+.title{
+    font-family: Helvetica, sans-serif;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    padding-left: 12px;
+}
+
+.input{
+    margin-bottom: 20px;
+    border-radius: 3px;
+    border: 2px solid black;
+    height: 25px;
+    width: 250px;
+    background-color: bisque;
+}
+
+.input:hover,
+.input:focus {
+    border: 2px solid blue;
+}

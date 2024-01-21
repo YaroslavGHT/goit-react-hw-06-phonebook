@@ -5,13 +5,13 @@ const ContactForm = ({
 }) => {
   return (
     <div className={css.formAdd}>
-        <form onSubmit={handleFormSubmit}>
-          <h3 className={css.titleForm}>NAME</h3>
-          <input type="text" name="name" required />
+        <form onSubmit={handleFormSubmit} className={css.form}>
+          <h3 className={css.titleForm}>Name</h3>
+          <input className={css.inputNum} type="text" name="name" required placeholder='Entered name'/>
           <h3 className={css.titleForm}>Number</h3>
-          <input type="tel" name="number" required />
-        <button className={css.buttonAdd} type='submit'>Add contact</button>
-          </form>
+          <input className={css.inputNum} type="tel" name="number" required placeholder='Entered number'/>
+          <button className={css.buttonAdd} type='submit'>Add contact</button>
+        </form>
       </div>
     
   );

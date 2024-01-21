@@ -1,4 +1,53 @@
 .formAdd{
     margin: 0 auto;
-    width: 600px;
+    width: 100%;
+}
+
+.titleForm{
+    font-family: Helvetica, sans-serif;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    padding-left: 12px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputNum{
+    margin-bottom: 20px;
+    border-radius: 3px;
+    border: 2px solid black;
+    height: 25px;
+    width: 250px;
+    background-color:bisque;
+}
+
+.inputNum::placeholder{
+    font-family: Helvetica, sans-serif;
+    font-style: italic;
+}
+
+.inputNum:hover,
+.inputNum:focus {
+    margin-bottom: 20px;
+    border-radius: 3px;
+    border: 2px solid blue;
+} 
+
+.buttonAdd{
+    height: 35px;
+    font-family: Helvetica, sans-serif;
+    font-size: 18px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    background-color:rgb(209, 138, 138);
+    border-radius: 5px;
+}
+
+.buttonAdd:hover,
+.buttonAdd:focus{
+    background-color:rgb(216, 231, 203)
 }

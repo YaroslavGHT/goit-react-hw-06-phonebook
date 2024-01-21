@@ -1,0 +1,37 @@
+.main{
+    margin: 0 auto;
+    width: 600px;
+}
+
+.title{
+    font-weight: 800;
+    font-size: 28px;
+    color: rgb(3, 1, 1);
+    font-family: Helvetica, sans-serif;
+    padding-top: 25px;
+    padding-left: 80px;
+    padding-bottom: 15px;
+}
+
+.form{
+    background-color: antiquewhite;
+    padding: 25px 25px;
+    border: 4px solid rgb(78, 99, 48);
+    border-radius: 15px;
+    
+}
+
+.formFilter{
+    border: 4px solid rgb(78, 99, 48);
+    border-radius: 15px;
+    background-color: antiquewhite;
+    padding: 25px 25px;
+}
+
+.listContact{
+    border: 4px solid rgb(78, 99, 48);
+    border-radius: 15px;
+    background-color: antiquewhite;
+    padding: 25px 25px;
+    margin-top: 25px;
+}
