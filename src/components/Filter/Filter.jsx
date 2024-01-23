@@ -1,9 +1,18 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../../redux/contactSlice/contactSlice.js';
+
 import css from './Filter.module.css'
 
-const Filter = ({
-    handleChangeFilter,
-    value
-    }) => {
+const Filter = () => {
+    const dispatch = useDispatch();
+    const filter = useSelector(store => store.contactsScope.filter);
+
+    const handleChangeFilter = event => {
+        const newFilter = event.target.value;
+        const action = setFilter(newFilter);
+        dispatch(action);
+    }
+    
     return (
     <>
         <h3 className={css.title}>Find contacts by name</h3>
@@ -11,7 +20,7 @@ const Filter = ({
             className={css.input}   
             type="text"
             name="findName"
-            value={value}
+            filter={filter}
             onChange={handleChangeFilter}
         />  
     </>

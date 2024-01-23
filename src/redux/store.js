@@ -12,12 +12,12 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { contactsReducer } from './redux.js';
+import { contactsReducer } from './contactSlice/contactSlice.js';
 
 const contactConfig = {
   key: 'contact',
   storage,
-  whitelist: ['filter'],
+  whitelist: ['contacts'],
 };
 
 export const store = configureStore({
